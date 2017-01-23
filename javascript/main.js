@@ -14,6 +14,7 @@ function printArray(arrayNumber){
 	var list = document.getElementById("list");
 	list.innerHTML = "";
 	for (var i = arrayNumber.length - 1; i >= 0; i--) {
+		// Insert numbers into span
 		var span = document.createElement("span");
 		span.setAttribute("contenteditable", true);
 		span.setAttribute("data-id", i);
@@ -27,6 +28,7 @@ function printArray(arrayNumber){
 
 function bubbleSort(items) {  
     var length = items.length;
+    // Start bubble sort algorithm
     for (var i = (length - 1); i >= 0; i--) {
         //Number of passes
         for (var j = (length - i); j > 0; j--) {
@@ -46,6 +48,7 @@ function bubbleSort(items) {
 function addItem(event){
 	event.preventDefault();
 	var item = document.getElementById("inputNumber").value;
+	// Verify no-repeat number
 	if (list.indexOf(item + " ") < 0) {
 		// Print number with a space
 		list.push(item + " ");
