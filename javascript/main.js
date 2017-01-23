@@ -31,7 +31,7 @@ function bubbleSort(items) {
         //Number of passes
         for (var j = (length - i); j > 0; j--) {
             //Compare the adjacent positions
-            if (items[j] < items[j - 1]) {
+            if (parseInt(items[j]) < parseInt(items[j - 1])) {
                 //Swap the numbers
                 var tmp = items[j];
                 items[j] = items[j - 1];
@@ -46,11 +46,13 @@ function bubbleSort(items) {
 function addItem(event){
 	event.preventDefault();
 	var item = document.getElementById("inputNumber").value;
-	// Print number with a space
-	list.push(item + " ");
-	printArray(list);
-	// Clear input 
-	document.getElementById("inputNumber").value = "";
+	if (list.indexOf(item + " ") < 0) {
+		// Print number with a space
+		list.push(item + " ");
+		printArray(list);
+		// Clear input
+		document.getElementById("inputNumber").value = "";
+	}
 }
 
 // SORT NUMBERS INTO ARRAY 
