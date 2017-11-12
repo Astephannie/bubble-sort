@@ -1,9 +1,14 @@
-deployment:
-  production:
-    branch: master
-    commands:
-      - ./deploy_prod.sh
+general:
+  branches:
+    ignore:
+      - gh-pages
        
 test:
   override:
-    - echo 'no tests, just say us Okay!'
+    - exit 0
+
+deployment:
+  staging:
+    branch: master
+    commands:
+      - ./scripts/deploy_ghpages.sh build
