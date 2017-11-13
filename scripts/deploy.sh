@@ -1,3 +1,4 @@
+# Script used from: https://github.com/eldarlabs/ghpages-deploy-script
 #!/bin/sh
 # ideas used from https://gist.github.com/motemen/8595451
 
@@ -13,7 +14,7 @@ siteSource="$1"
 
 if [ ! -d "$siteSource" ]
 then
-    echo "Usage: $0 <site source dir>"
+    echo "Usage: $0 app"
     exit 1
 fi
 

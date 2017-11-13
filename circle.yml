@@ -19,4 +19,5 @@ deployment:
   production:
     branch: master
     commands:
-      - ./scripts/deploy-ghpages.sh build
+      - chmod +x ./scripts/deploy.sh
+      - ./scripts/deploy.sh app
