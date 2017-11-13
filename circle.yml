@@ -1,42 +1,22 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
 machine:
   java:
     version: oraclejdk8
+
 dependencies:
   pre:
     - sudo pip install html5validator
+
 test:
   override:
     - html5validator
 
-
-
-# version: 2
-# jobs:
-#    build:
-#      docker:
-#        - image: circleci/node:7
-#
-#
-#      steps:
-#        - checkout
-#        - run: echo "hello world"
-#        - run: |
-#            npm install html-lint &&
-#            html-lint https://www.crowdbotics.com/
-
-
-
-
-  # python:
-  #     version: 2.7.5
-
-  # pre:
-  #     - curl -L -o phantomjs.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
-  #     - tar -jxf phantomjs.tar.bz2
-  # post:
-  #       - npm install -g casperjs@1.1.0-beta4
-
-
-  # steps:
-  #   - run: phantomjs loadingspeed.js https://crowdbotics.github.io/www-crowdbotics/
-  #   - run: casperjs test redirecting.js
+deployment:
+  production:
+    branch: master
+    commands:
+      - ./scripts/deploy-ghpages.sh build
