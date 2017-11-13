@@ -12,8 +12,8 @@ pwd
 remote=$(git config remote.origin.url)
 
 # make a directory to put the gp-pages branch
-mkdir gh-pages-branch
-cd gh-pages-branch
+mkdir gh-pages
+cd gh-pages/
 # now lets setup a new repo so we can update the gh-pages branch
 git config --global user.email "$GH_EMAIL" > /dev/null 2>&1
 git config --global user.name "$GH_NAME" > /dev/null 2>&1
@@ -44,6 +44,6 @@ git push --force --quiet origin gh-pages > /dev/null 2>&1
 # go back to where we started and remove the gh-pages git repo we made and used
 # for deployment
 cd ..
-rm -rf gh-pages-branch
+rm -rf gh-pages
 
 echo "Finished Deployment!"
