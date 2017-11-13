@@ -1,4 +1,8 @@
 #!/bin/sh
+# ideas used from https://gist.github.com/motemen/8595451
+
+# Based on https://github.com/eldarlabs/ghpages-deploy-script/blob/master/scripts/deploy-ghpages.sh
+# Used with their MIT license https://github.com/eldarlabs/ghpages-deploy-script/blob/master/LICENSE
 
 # abort the script if there is a non-zero error
 set -e
@@ -23,7 +27,7 @@ then
     git checkout gh-pages
     # delete any old site as we are going to replace it
     # Note: this explodes if there aren't any, so moving it here for now
-    git rm -rf .
+    # git rm -rf .
 else
     git checkout --orphan gh-pages
 fi
