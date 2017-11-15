@@ -46,21 +46,21 @@ echo ">>> remote $(git config remote.origin.url)"
 
 echo "Looking for old gh-pages files"
 git rev-parse --verify origin/gh-pages > /dev/null 2>&1
+ghPagesExists=$(echo "$?")
 
-if "$?"; then
+if $ghPagesExists; then
     echo ">>> Entering to an ophan gh-pages branch"
     git checkout --orphan gh-pages
 else
     echo ">>> Deleting old gh-pages content"
     git checkout gh-pages
-    git rm -rf ./*
+    git rm -r * --cached --ignore-unmatch
 fi
 
 # -*- BEGIN -*-
 # El procesamiento de contenido que tengas que revisar empieza aquí
 echo "Getting new gh-pages content from ${appdir}"
-ls "../${appdir}/"
-cp -a "../${appdir}/*" .
+cp -a "../${appdir}"/* .
 echo ">>> Transfer complete"
 # -*- END -*-
 
