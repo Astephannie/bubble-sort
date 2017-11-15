@@ -53,13 +53,13 @@ if $?; then
 else
     echo ">>> Deleting old gh-pages content"
     git checkout gh-pages
-    git rm -rf .
+    git rm -rf \*
 fi
 
 # -*- BEGIN -*-
 # El procesamiento de contenido que tengas que revisar empieza aquí
 echo "Getting new gh-pages content from ${appdir}"
-cp -a "../${appdir}/*" .
+cp -a "../${appdir}/\*" .
 echo ">>> Transfer complete"
 # -*- END -*-
 
