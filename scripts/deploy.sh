@@ -59,6 +59,7 @@ fi
 # -*- BEGIN -*-
 # El procesamiento de contenido que tengas que revisar empieza aquí
 echo "Getting new gh-pages content from ${appdir}"
+ls "../${appdir}/"
 cp -a "../${appdir}/*" .
 echo ">>> Transfer complete"
 # -*- END -*-
