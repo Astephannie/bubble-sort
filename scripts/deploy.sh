@@ -47,7 +47,7 @@ echo ">>> remote $(git config remote.origin.url)"
 echo "Looking for old gh-pages files"
 git rev-parse --verify origin/gh-pages > /dev/null 2>&1
 
-if $?; then
+if "$?"; then
     echo ">>> Entering to an ophan gh-pages branch"
     git checkout --orphan gh-pages
 else
