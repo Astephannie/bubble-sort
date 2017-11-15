@@ -1,6 +1,4 @@
 #!/bin/sh
-set -e
-
 echo "** Starting new deploy **"
 echo ""
 echo "Current directory:"
