@@ -1,49 +1,83 @@
 #!/bin/sh
-# ideas used from https://gist.github.com/motemen/8595451
-
-# Based on https://github.com/eldarlabs/ghpages-deploy-script/blob/master/scripts/deploy-ghpages.sh
-# Used with their MIT license https://github.com/eldarlabs/ghpages-deploy-script/blob/master/LICENSE
-
-# abort the script if there is a non-zero error
 set -e
 
-# show where we are on the machine
-pwd
+echo "** Starting new deploy **"
+echo ""
+echo "Current directory:"
+echo ">>> $(pwd)"
+
 remote=$(git config remote.origin.url)
 
-# make a directory to put the gp-pages branch
-mkdir gh-pages-branch
-cd gh-pages-branch
-# now lets setup a new repo so we can update the gh-pages branch
-git config --global user.email "$GH_EMAIL" > /dev/null 2>&1
-git config --global user.name "$GH_NAME" > /dev/null 2>&1
-git init
-git remote add --fetch origin "$remote"
+echo ""
+echo "Getting remote:"
+echo ">>> ${remote}"
+echo ""
 
+appdir="$1"
 
-# switch into the the gh-pages branch
-if git rev-parse --verify origin/gh-pages > /dev/null 2>&1
-then
-    git checkout gh-pages
-    # delete any old site as we are going to replace it
-    # Note: this explodes if there aren't any, so moving it here for now
-    # git rm -rf .
-else
-    git checkout --orphan gh-pages
+echo "Configuring application directory:"
+echo ">>> ${appdir}"
+
+if [ ! -d "$appdir" ]; then
+    echo ">>> ERROR: ${appdir} doesn't exist, please provide a valid directory"
+    echo ">>> USAGE: $0 <site source dir>"
+    exit 1
 fi
 
-# copy over or recompile the new site
-#cp -a "../${siteSource}/." .
+depdir="gh-pages-branch"
 
-# stage any changes and new files
+echo ""
+echo "Configuring test environment"
+echo ">>> Creating gh-pages' directory"
+mkdir ${depdir}
+
+echo ">>> entering into gh-pages' directory"
+cd ${depdir}
+
+echo "Configuring GitHub Account"
+git config --global user.email "$GH_EMAIL" > /dev/null 2>&1
+git config --global user.name "$GH_NAME" > /dev/null 2>&1
+for line in $(git config --list | grep user); do
+    echo ">>> $line";
+done
+
+echo "Configuring GitHub Remote"
+git init
+git remote add --fetch origin "$remote"
+echo ">>> remote $(git config remote.origin.url)"
+
+echo "Looking for old gh-pages files"
+git rev-parse --verify origin/gh-pages > /dev/null 2>&1
+
+if $?; then
+    echo ">>> Entering to an ophan gh-pages branch"
+    git checkout --orphan gh-pages
+else
+    echo ">>> Deleting old gh-pages content"
+    git checkout gh-pages
+    git rm -rf .
+fi
+
+# -*- BEGIN -*-
+# El procesamiento de contenido que tengas que revisar empieza aquí
+echo "Getting new gh-pages content from ${appdir}"
+cp -a "../${appdir}/*" .
+echo ">>> Transfer complete"
+# -*- END -*-
+
+echo "Pushing new files to ${remote}"
 git add -A
-# now commit, ignoring branch gh-pages doesn't seem to work, so trying skip
+echo ">>> Stage complete"
+
 git commit --allow-empty -m "Deploy to GitHub pages [ci skip]"
-# and push, but send any output to /dev/null to hide anything sensitive
-git push --force --quiet origin gh-pages
-# go back to where we started and remove the gh-pages git repo we made and used
-# for deployment
+echo ">>> Commit complete"
+
+git push --force --quiet origin gh-pages > /dev/null 2>&1
+echo ">>> Push complete"
+
+echo "Removing unnecesary files"
 cd ..
 rm -rf gh-pages-branch
+echo ">>> Remove complete"
 
-echo "Finished Deployment!"
+echo "** Finished Deployment! **"

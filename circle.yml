@@ -3,10 +3,6 @@ general:
     ignore:
       - gh-pages
 
-machine:
-  java:
-    version: oraclejdk8
-
 dependencies:
   pre:
     - sudo pip install html5validator
@@ -20,3 +16,4 @@ deployment:
     branch: master
     commands:
       - ./scripts/deploy.sh app
+
